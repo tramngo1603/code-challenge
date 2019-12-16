@@ -11,3 +11,7 @@ def test_myfunc2():
 def test_myfunc3():
     result1 = findGreater(78960231)
     assert result1 == 78960312
+
+def test_singledigit():
+    result1 = findGreater(3)
+    assert result1 == 3
