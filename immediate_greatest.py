@@ -1,18 +1,30 @@
-# To do: when the input is already the largest number that could be represented
-# by the number, would it return the input number itself, or raise an error?
+import heapq
 
-def my_func(num):
-    int_list = [int(i) for i in str(num)]
-    n = len(int_list)
+def findGreater(num):
+    """
+    findGreater takes a number and outputs the next greatest number that is a
+    permutation of the input number.
 
-    for j in reversed(range(n)):
-        if int_list[j] > int_list[j-1]:
+    """
+    digits = [int(i) for i in str(num)]
+    n = len(digits)
 
-            m = min(int_list[j:])
-            m = int_list.index(m)
-            int_list[j-1], int_list[m] = int_list[m], int_list[j-1]
-            int_list[j:] = sorted(int_list[j:])
+    # use heap to track minimum digits seen so far
+    heap = []
+
+    for i in reversed(range(n)):
+
+        curr_val = digits[i]
+        next_val = digits[i-1]
+        heapq.heappush(heap, (curr_val, i))
+
+        if curr_val > next_val:
+            (ele, idx) = heapq.heappop(heap)
+            while ele < next_val:
+                (ele, idx) = heapq.heappop(heap)
+            digits[i-1], digits[idx] = digits[idx], digits[i-1]
+            digits[i:] = sorted(digits[i:])
             break
 
-    result = int("".join(map(str, int_list)))
+    result = int("".join(map(str, digits)))
     return result
