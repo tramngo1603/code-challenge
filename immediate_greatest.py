@@ -11,8 +11,9 @@ def findGreater(num):
 
     # use heap to track minimum digits seen so far
     heap = []
-
-    for i in reversed(range(n)):
+    # stop before i == 0 in case the input number is
+    # the largest possible number, (example: 54321)
+    for i in reversed(range(1, n)):
 
         curr_val = digits[i]
         next_val = digits[i-1]
